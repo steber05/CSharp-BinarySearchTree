@@ -8,10 +8,9 @@ namespace BinarySearchTree
 {
     class Tree
     {
-        //all BST have a root:
         Node root;
+        //end of field
 
-        //constructors
         public Tree()
         {
             //empty tree
@@ -30,8 +29,8 @@ namespace BinarySearchTree
 
             //or
             root = new Node(startValue);
-        }
-        //insert a value
+        }//end of constuctors
+
         public void Insert(int value)
         {
             //if there's nothing in the list, add to root
@@ -85,38 +84,26 @@ namespace BinarySearchTree
             }
         }
 
-        public void InOrderPrint()
+        public void PrintInOrder()
         {
-            //start checking our tree for values
+            //start from root of each tree created
             InOrder(root);
         }
 
-        /// <summary>
-        /// Recursive method to get values of this BST
-        /// </summary>
-        /// <param name="p"></param>
-        private void InOrder(Node p)
+        private void InOrder(Node node)
         {
             //if there is no value set in this node, stop traversing
-            if (p == null)
+            if (n == null)
             {
                 return;
             }
-            //also written as:
-            //if (p == null) return;
 
-            //go as far left as possible
+            //update for left
             InOrder(p.left);
             //print the value
             Console.WriteLine(p.value);
-            //go as far right as possible
+            //update for right
             InOrder(p.right);
-            //done!
-        }
-
-        public void Delete2Noded()
-        {
-
         }
 
         public int FindRightSmallest(Node n)
@@ -182,99 +169,6 @@ namespace BinarySearchTree
             int value = current.value;
             current = null;
             return value;
-        }
-
-
-        public void DeleteNode(Node toDelete)
-        {
-            //Using the insert method to creat our delete method
-            if (root != null)
-            {
-                //find the node to delete
-                Node current = root;
-                Node parent = root;
-                bool left = true;
-                while (current != null)
-                {
-                    //set parent
-                    parent = current;
-                    //if the current and value are the same, 
-                    //then we have found the thing to delete
-                    if (current.value == toDelete.value)
-                    {
-                        //check for children
-                        if (current.left == null && current.right == null)
-                        {
-                            //delete the node as it has no children
-                            if (left == true) parent.left = null;
-                            else parent.right = null;
-
-                            current = null;
-                        }
-                        if (current.left != null && current.right == null)
-                        {
-                            //one child on the left of current to move 
-                            //up to parent/replace current
-                            //if we went down the left of the parent,  
-                            //then replace parent.left with the current's left child
-                            //otherwise it was the right of parent.
-                            if (left == true) parent.left = current.left;
-                            else parent.right = current.left;
-
-                            current = null;
-                        }
-                        else if (current.right != null && current.left == null)
-                        {
-                            //one child on the right of current to move 
-                            //up to parent/replace current
-                            if (left == true) parent.left = current.right;
-                            else parent.right = current.right;
-
-                            current = null;
-
-                        }
-                        else
-                        {
-                            //we have two children!
-                            if (left == true) parent.left = current.left;
-                            else parent.right = current.left;
-
-                            // End of Code we started today
-                        }
-                    }
-
-                    //traverse the tree (value < current.value)
-                    if (current.value > toDelete.value)
-                    {
-                        //change current to left child
-                        current = current.left;
-                        // System.Console.WriteLine("left");
-                        left = true;
-                    }
-                    else if (current.value < toDelete.value)
-                    {
-                        current = current.right;
-                        //  System.Console.WriteLine("right");
-                        left = !true;  //same as left = false
-                    }
-                    else
-                    {
-                        return;
-                    }
-
-                }
-                //add value
-                if (left)
-                {
-                    //  Console.WriteLine(value);
-                    parent.left = new Node(toDelete.value);
-                }
-                else
-                {
-                    //     Console.WriteLine(value);
-                    parent.right = new Node(toDelete.value);
-                }
-            }
         }
     }
 }
