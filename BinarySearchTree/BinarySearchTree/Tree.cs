@@ -9,6 +9,7 @@ namespace BinarySearchTree
     class Tree
     {
         Node root;
+        int size;
         //end of field
 
         public Tree()
@@ -33,23 +34,25 @@ namespace BinarySearchTree
 
         public void Insert(int value)
         {
-            //if there's nothing in the list, add to root
+            //root is empty add value to root
             if (root == null)
             {
                 root = new Node(value);
+                size++;
             }
             else
             {
-                //add to a leaf/child/end node
                 Node current = root;
                 Node parent = root;
                 bool left = true;
+                //end of variables
+
+                //check whether to place as .left or .right
                 while (current != null)
                 {
-                    // System.Console.WriteLine(current.value);
                     //set parent
                     parent = current;
-                    //traverse the tree (value < current.value)
+                    //traverse the tree
                     if (current.value > value)
                     {
                         //change current to left child
@@ -69,18 +72,17 @@ namespace BinarySearchTree
                     }
 
                 }
-                //add value
+                //add value to tree based on set boolean
                 if (left)
                 {
-                    //  Console.WriteLine(value);
                     parent.left = new Node(value);
+                    size++;
                 }
                 else
                 {
-                    //     Console.WriteLine(value);
                     parent.right = new Node(value);
+                    size++;
                 }
-                //   Console.WriteLine("++========================++");
             }
         }
 
@@ -88,6 +90,7 @@ namespace BinarySearchTree
         {
             //start from root of each tree created
             InOrder(root);
+            DecreasingOrder(root);
         }
 
         private void InOrder(Node node)
@@ -106,69 +109,20 @@ namespace BinarySearchTree
             InOrder(p.right);
         }
 
-        public int FindRightSmallest(Node n)
+        private void DecreasingOrder(Node node)
         {
-            //keeping track of where we are:
-            Node current = n;
-            Node parent;
-
-            //Try to go right 1
-            parent = current;
-            current = current.right;
-            if (current.left == null)
+            //if there is no value set in this node, stop traversing
+            if (n == null)
             {
-                int value = current.value;
-                parent.right = null;
-                return value;
-            }
-            else
-            {
-                //while there are left nodes, go left
-                while (current.left != null)
-                {
-                    parent = current;
-                    current = current.left;
-                }
-                //replace our node to delete with our smallest big number 
-                //(the smallest number from the right hand side of tree)
-                int value = current.value;
-                parent.left = null;
-                return value;
+                return;
             }
 
-        }
-
-        public int FindRightSmallestWithBool(Node n)
-        {
-            //keeping track of where we are:
-            Node current = n;
-            Node parent;
-
-            //Try to go right 1
-            parent = current;
-            current = current.right;
-            bool isLeft = false;
-
-            //while there are left nodes, go left
-            while (current.left != null)
-            {
-                parent = current;
-                current = current.left;
-                isLeft = true;
-            }
-            //replace our node to delete with our smallest big number 
-            //(the smallest number from the right hand side of tree)
-            if (isLeft == true)
-            {
-                parent.left = null;
-            }
-            else
-            {
-                parent.right = null;
-            }
-            int value = current.value;
-            current = null;
-            return value;
+            //update for right
+            InOrder(p.right);
+            //print the value
+            Console.WriteLine(p.value);
+            //update for left
+            InOrder(p.left);
         }
     }
 }
